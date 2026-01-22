@@ -1750,22 +1750,33 @@
                         Du kan lägga till denna sida på din hemskärm så fungerar den som en app!
                     </p>
                     
-                    <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 8px;">
-                        <strong style="font-size: 0.85rem;"><i class="ri-apple-fill"></i> iPhone / iPad:</strong>
+                    <div id="ios-instructions" style="display: none; background: white; padding: 12px; border-radius: 8px;">
+                        <strong style="font-size: 0.85rem;"><i class="ri-apple-fill"></i> iPhone / iPad (Safari):</strong>
                         <ol style="font-size: 0.85rem; margin: 8px 0 0 0; padding-left: 20px;">
-                            <li>Tryck på <strong>Dela</strong>-knappen <span style="border: 1px solid #ccc; padding: 2px 6px; border-radius: 4px;">↑</span> (längst ner)</li>
-                            <li>Scrolla och välj <strong>"Lägg till på hemskärmen"</strong></li>
-                            <li>Tryck <strong>Lägg till</strong></li>
+                            <li>Tryck på <strong>Dela</strong>-ikonen <span style="border: 1px solid #ccc; padding: 2px 6px; border-radius: 4px;">□↑</span> (ruta med pil upp, längst ner i Safari)</li>
+                            <li>Scrolla ner i menyn och tryck <strong>"Lägg till på hemskärmen"</strong></li>
+                            <li>Skriv ett namn (eller behåll) och tryck <strong>Lägg till</strong></li>
                         </ol>
+                        <p style="font-size: 0.8rem; color: #666; margin-top: 8px; margin-bottom: 0;">
+                            💡 På iOS 18+: Låt "Öppna som webbapp" vara <strong>på</strong> för bästa upplevelse
+                        </p>
                     </div>
                     
-                    <div style="background: white; padding: 12px; border-radius: 8px;">
-                        <strong style="font-size: 0.85rem;"><i class="ri-android-fill"></i> Android:</strong>
+                    <div id="android-instructions" style="display: none; background: white; padding: 12px; border-radius: 8px;">
+                        <strong style="font-size: 0.85rem;"><i class="ri-android-fill"></i> Android (Chrome):</strong>
                         <ol style="font-size: 0.85rem; margin: 8px 0 0 0; padding-left: 20px;">
-                            <li>Tryck på <strong>menyn</strong> <span style="border: 1px solid #ccc; padding: 2px 6px; border-radius: 4px;">⋮</span> (tre prickar uppe till höger)</li>
-                            <li>Välj <strong>"Lägg till på startskärmen"</strong> eller <strong>"Installera app"</strong></li>
-                            <li>Bekräfta med <strong>Lägg till</strong></li>
+                            <li>Tryck på <strong>menyn</strong> <span style="border: 1px solid #ccc; padding: 2px 6px; border-radius: 4px;">⋮</span> (tre prickar, oftast uppe till höger)</li>
+                            <li>Välj <strong>"Installera app"</strong> eller <strong>"Lägg till på startskärmen"</strong></li>
+                            <li>Bekräfta med <strong>Installera</strong> eller <strong>Lägg till</strong></li>
                         </ol>
+                    </div>
+
+                    <div id="desktop-instructions" style="display: none; background: white; padding: 12px; border-radius: 8px;">
+                        <strong style="font-size: 0.85rem;"><i class="ri-computer-line"></i> Dator:</strong>
+                        <p style="font-size: 0.85rem; margin: 8px 0 0 0;">
+                            På en dator kan du bokmärka sidan eller besöka den direkt. 
+                            Vill du använda den på mobilen? Öppna länken på din telefon!
+                        </p>
                     </div>
                 </div>
 
@@ -4255,6 +4266,25 @@ Tips: Exportera först om du vill ha en backup!`;
 
         function showTutorial() {
             document.getElementById('tutorialModal').classList.add('active');
+            showDeviceInstructions();
+        }
+
+        function showDeviceInstructions() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Hide all first
+            document.getElementById('ios-instructions').style.display = 'none';
+            document.getElementById('android-instructions').style.display = 'none';
+            document.getElementById('desktop-instructions').style.display = 'none';
+            
+            // Detect device and show relevant instructions
+            if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+                document.getElementById('ios-instructions').style.display = 'block';
+            } else if (/android/i.test(ua)) {
+                document.getElementById('android-instructions').style.display = 'block';
+            } else {
+                document.getElementById('desktop-instructions').style.display = 'block';
+            }
         }
 
         function closeTutorial() {
