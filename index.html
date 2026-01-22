@@ -377,9 +377,27 @@
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        a.btn, a.btn:hover, a.btn:visited {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn i {
+            flex-shrink: 0;
+            margin-right: 6px;
+        }
+
+        .btn span {
+            display: inline-flex;
+            align-items: center;
         }
 
         .btn::before {
@@ -4343,21 +4361,21 @@ Tips: Exportera först om du vill ha en backup!`;
                                 ${item.member.email ? `<span style="color: rgba(255,255,255,0.6); font-weight: normal; font-size: 0.8rem;"><i class="ri-mail-line"></i> ${item.member.email}</span>` : ''}
                             </h4>
                             <div style="background: var(--cream); color: var(--text); padding: 16px; border-radius: var(--radius); margin-top: 12px; white-space: pre-wrap; font-size: 0.9rem; line-height: 1.6; border: 1px solid var(--border);">${escapeHtml(messageText)}</div>
-                            <div style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;">
-                                <button class="btn btn-sm btn-secondary copy-btn" onclick="copyToClipboard(this, \`${escapeForJs(messageText)}\`)">
-                                    <i class="ri-file-copy-line"></i> Kopiera
+                            <div style="margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                <button class="btn btn-sm" style="background: var(--bg-warm); color: var(--charcoal); border: 1px solid var(--border); width: 100%;" onclick="copyToClipboard(this, \`${escapeForJs(messageText)}\`)">
+                                    <span><i class="ri-file-copy-line"></i> Kopiera</span>
                                 </button>
                                 ${item.member.phone ? `
-                                    <a href="https://wa.me/${formatPhoneForWhatsApp(item.member.phone)}?text=${encodeURIComponent(messageText)}" target="_blank" class="btn btn-sm btn-success">
-                                        <i class="ri-whatsapp-line"></i> WhatsApp
+                                    <a href="https://wa.me/${formatPhoneForWhatsApp(item.member.phone)}?text=${encodeURIComponent(messageText)}" target="_blank" class="btn btn-sm" style="background: #25D366; color: white; width: 100%;">
+                                        <span><i class="ri-whatsapp-line"></i> WhatsApp</span>
                                     </a>
-                                    <a href="sms:${item.member.phone}&body=${encodeURIComponent(messageText)}" class="btn btn-sm btn-secondary">
-                                        <i class="ri-message-line"></i> SMS
+                                    <a href="sms:${item.member.phone}&body=${encodeURIComponent(messageText)}" class="btn btn-sm" style="background: var(--charcoal-light); color: white; width: 100%;">
+                                        <span><i class="ri-message-line"></i> SMS</span>
                                     </a>
                                 ` : ''}
                                 ${item.member.email ? `
-                                    <a href="mailto:${item.member.email}?subject=${encodeURIComponent('Funktionärspass: ' + event.name)}&body=${encodeURIComponent(messageText)}" class="btn btn-sm btn-secondary">
-                                        <i class="ri-mail-line"></i> E-post
+                                    <a href="mailto:${item.member.email}?subject=${encodeURIComponent('Funktionärspass: ' + event.name)}&body=${encodeURIComponent(messageText)}" class="btn btn-sm" style="background: var(--charcoal-light); color: white; width: 100%;">
+                                        <span><i class="ri-mail-line"></i> E-post</span>
                                     </a>
                                 ` : ''}
                             </div>
