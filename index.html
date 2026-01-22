@@ -11,15 +11,18 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Funktionärer">
     <meta name="application-name" content="Funktionärer">
-    <meta name="theme-color" content="#2563eb">
-    <meta name="msapplication-navbutton-color" content="#2563eb">
-    <meta name="msapplication-TileColor" content="#2563eb">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="msapplication-navbutton-color" content="#1a1a2e">
+    <meta name="msapplication-TileColor" content="#e85d04">
     
     <!-- App icon for home screen (using a data URI for self-contained file) -->
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232563eb' width='100' height='100' rx='20'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white'>📋</text></svg>">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232563eb' width='100' height='100' rx='20'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white'>📋</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231a1a2e' width='100' height='100' rx='20'/><rect fill='%23e85d04' x='10' y='85' width='80' height='5' rx='2'/><text x='50' y='65' font-size='45' text-anchor='middle' fill='white'>📋</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%231a1a2e' width='100' height='100' rx='20'/><rect fill='%23e85d04' x='10' y='85' width='80' height='5' rx='2'/><text x='50' y='65' font-size='45' text-anchor='middle' fill='white'>📋</text></svg>">
     
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -28,157 +31,406 @@
         }
 
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #64748b;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: #f8fafc;
+            --primary: #e85d04;
+            --primary-dark: #d45203;
+            --primary-light: #ff7b29;
+            --secondary: #6b7280;
+            --success: #059669;
+            --success-light: #d1fae5;
+            --warning: #d97706;
+            --danger: #dc2626;
+            --danger-light: #fee2e2;
+            --bg: #faf7f5;
+            --bg-warm: #f5f0eb;
             --card: #ffffff;
-            --border: #e2e8f0;
-            --text: #1e293b;
-            --text-muted: #64748b;
-            --radius: 12px;
-            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --border: #e5e0db;
+            --text: #1f1f1f;
+            --text-muted: #6b7280;
+            --charcoal: #1a1a2e;
+            --charcoal-light: #2d2d44;
+            --cream: #fdfcfa;
+            --radius: 4px;
+            --radius-lg: 8px;
+            --shadow: 0 1px 3px rgba(26,26,46,0.08), 0 4px 12px rgba(26,26,46,0.04);
+            --shadow-lg: 0 8px 30px rgba(26,26,46,0.12), 0 2px 8px rgba(26,26,46,0.06);
+            --shadow-hover: 0 12px 40px rgba(26,26,46,0.16), 0 4px 12px rgba(26,26,46,0.08);
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Noise texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: var(--font-body);
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Staggered load animation */
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 24px;
         }
 
+        /* === HEADER === */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--charcoal);
             color: white;
-            padding: 24px;
-            margin-bottom: 24px;
-            border-radius: var(--radius);
+            padding: 0;
+            margin-bottom: 32px;
+            border-radius: var(--radius-lg);
             box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            position: relative;
+            animation: fadeSlideIn 0.6s ease-out;
+        }
+
+        /* Diagonal stripe pattern - sports field inspiration */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 8px,
+                rgba(232, 93, 4, 0.15) 8px,
+                rgba(232, 93, 4, 0.15) 16px
+            );
+            pointer-events: none;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .header-content {
+            padding: 28px 32px;
+            position: relative;
+            z-index: 1;
         }
 
         header h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 2px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            text-transform: uppercase;
+        }
+
+        header h1 i {
+            color: var(--primary);
+            font-size: 1.8rem;
         }
 
         header p {
-            opacity: 0.9;
+            opacity: 0.7;
             margin-top: 4px;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
 
-        .tabs {
+        .header-actions {
             display: flex;
             gap: 8px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
+            margin-top: 16px;
         }
 
-        .tab-btn {
-            padding: 12px 24px;
-            border: none;
+        .header-actions .btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(4px);
+        }
+
+        .header-actions .btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* === STATS GRID === */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+            animation: fadeSlideIn 0.6s ease-out 0.1s backwards;
+        }
+
+        .stat-card {
             background: var(--card);
-            color: var(--text-muted);
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s;
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
             box-shadow: var(--shadow);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .stat-card i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            opacity: 0.8;
+        }
+
+        .stat-card .value {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--charcoal);
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .stat-card .label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* === TABS === */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 32px;
+            background: var(--card);
+            padding: 6px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            animation: fadeSlideIn 0.6s ease-out 0.2s backwards;
+        }
+
+        .tab-btn {
+            padding: 14px 24px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
         }
 
         .tab-btn:hover {
-            background: var(--primary);
-            color: white;
+            color: var(--text);
+            background: var(--bg-warm);
         }
 
         .tab-btn.active {
-            background: var(--primary);
+            background: var(--charcoal);
             color: white;
+            box-shadow: 0 2px 8px rgba(26,26,46,0.2);
+        }
+
+        .tab-btn.active i {
+            color: var(--primary);
         }
 
         .tab-content {
             display: none;
+            animation: scaleIn 0.4s ease-out;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        /* === CARDS === */
         .card {
             background: var(--card);
-            border-radius: var(--radius);
-            padding: 24px;
-            margin-bottom: 20px;
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            margin-bottom: 24px;
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--bg-warm);
         }
 
         .card-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            color: var(--charcoal);
         }
 
+        .card-header h2 i {
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        /* === BUTTONS === */
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .btn:active::before {
+            width: 200px;
+            height: 200px;
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
+            box-shadow: 0 4px 14px rgba(232, 93, 4, 0.3);
         }
 
         .btn-primary:hover {
             background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 93, 4, 0.4);
         }
 
         .btn-secondary {
-            background: var(--secondary);
+            background: var(--charcoal);
             color: white;
         }
 
         .btn-secondary:hover {
-            background: #475569;
+            background: var(--charcoal-light);
+            transform: translateY(-2px);
         }
 
         .btn-success {
             background: var(--success);
             color: white;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
         }
 
         .btn-danger {
@@ -186,44 +438,57 @@
             color: white;
         }
 
+        .btn-danger:hover {
+            transform: translateY(-2px);
+        }
+
         .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.85rem;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            border-radius: 30px;
         }
 
         .btn-icon {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             padding: 0;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
+            border-radius: 50%;
         }
 
+        /* === FORMS === */
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 500;
+            margin-bottom: 8px;
+            font-weight: 600;
             color: var(--text);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px 14px;
+            padding: 14px 18px;
             border: 2px solid var(--border);
-            border-radius: 8px;
+            border-radius: var(--radius);
+            font-family: var(--font-body);
             font-size: 0.95rem;
-            transition: border-color 0.2s;
+            transition: all 0.25s ease;
+            background: var(--cream);
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(232, 93, 4, 0.1);
         }
 
         .form-row {
@@ -232,58 +497,93 @@
             gap: 16px;
         }
 
+        /* === TABLES === */
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
         th, td {
-            padding: 12px;
+            padding: 16px;
             text-align: left;
-            border-bottom: 1px solid var(--border);
         }
 
         th {
-            background: var(--bg);
+            background: var(--charcoal);
+            color: white;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        th:first-child {
+            border-radius: var(--radius) 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 var(--radius) 0 0;
+        }
+
+        td {
+            border-bottom: 1px solid var(--border);
+            background: var(--card);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:last-child td:first-child {
+            border-radius: 0 0 0 var(--radius);
+        }
+
+        tr:last-child td:last-child {
+            border-radius: 0 0 var(--radius) 0;
+        }
+
+        tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:hover td {
+            background: var(--bg-warm);
+        }
+
+        /* === BADGES === */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: var(--text-muted);
-        }
-
-        tr:hover {
-            background: #f1f5f9;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
         }
 
         .badge-primary {
-            background: #dbeafe;
+            background: rgba(232, 93, 4, 0.1);
             color: var(--primary);
         }
 
         .badge-success {
-            background: #dcfce7;
-            color: #16a34a;
+            background: var(--success-light);
+            color: var(--success);
         }
 
         .badge-warning {
             background: #fef3c7;
-            color: #d97706;
+            color: var(--warning);
         }
 
         .badge-danger {
-            background: #fee2e2;
-            color: #dc2626;
+            background: var(--danger-light);
+            color: var(--danger);
         }
 
+        /* === MODALS === */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -291,7 +591,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(4px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -300,87 +601,156 @@
 
         .modal-overlay.active {
             display: flex;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal {
             background: var(--card);
-            border-radius: var(--radius);
-            padding: 24px;
+            border-radius: var(--radius-lg);
+            padding: 32px;
             max-width: 600px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 25px 60px rgba(26, 26, 46, 0.3);
+            animation: modalSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid var(--border);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--bg-warm);
         }
 
         .modal-header h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--charcoal);
         }
 
         .close-btn {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border: none;
-            background: var(--bg);
-            border-radius: 8px;
+            background: var(--bg-warm);
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.25rem;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
         }
 
         .close-btn:hover {
             background: var(--danger);
             color: white;
+            transform: rotate(90deg);
         }
 
+        /* === CHIPS === */
         .member-chip {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--bg);
-            padding: 6px 12px;
-            border-radius: 20px;
+            background: var(--bg-warm);
+            padding: 8px 16px;
+            border-radius: 50px;
             margin: 4px;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .member-chip:hover {
+            background: var(--bg);
+            border-color: var(--primary);
         }
 
         .member-chip .remove {
             cursor: pointer;
             color: var(--danger);
+            transition: transform 0.2s ease;
         }
 
+        .member-chip .remove:hover {
+            transform: scale(1.2);
+        }
+
+        /* === EVENT CARDS === */
         .event-card {
             border: 2px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            transition: all 0.2s;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+            transform-origin: top;
         }
 
         .event-card:hover {
             border-color: var(--primary);
+            transform: translateX(4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .event-card:hover::before {
+            transform: scaleY(1);
         }
 
         .event-card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .event-card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--charcoal);
         }
 
         .event-card-date {
@@ -388,162 +758,180 @@
             font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            background: var(--bg-warm);
+            padding: 6px 12px;
+            border-radius: 50px;
+        }
+
+        .event-card-date i {
+            color: var(--primary);
         }
 
         .shift-list {
-            margin-top: 12px;
+            margin-top: 16px;
         }
 
         .shift-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 14px 18px;
+            background: var(--bg-warm);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            border-left: 3px solid var(--primary);
+            transition: all 0.2s ease;
+        }
+
+        .shift-item:hover {
             background: var(--bg);
-            border-radius: 8px;
-            margin-bottom: 8px;
+            transform: translateX(4px);
         }
 
         .shift-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
 
         .shift-time {
-            font-weight: 600;
-            color: var(--primary);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--charcoal);
         }
 
         .shift-role {
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--text);
         }
 
         .shift-assigned {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.875rem;
         }
 
         .person-schedule {
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             page-break-inside: avoid;
         }
 
         .person-schedule h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--primary);
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary);
+            text-transform: uppercase;
         }
 
         .schedule-item {
-            padding: 12px;
-            background: var(--bg);
-            border-radius: 8px;
-            margin-bottom: 8px;
+            padding: 16px;
+            background: var(--bg-warm);
+            border-radius: var(--radius);
+            margin-bottom: 10px;
+            border-left: 3px solid var(--primary);
         }
 
         .schedule-event {
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--charcoal);
         }
 
         .schedule-details {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.875rem;
+            margin-top: 4px;
         }
 
         .message-preview {
-            background: var(--bg);
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 16px;
+            background: var(--charcoal);
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
             white-space: pre-wrap;
-            font-family: inherit;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
         }
 
         .message-preview h4 {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .copy-btn {
-            margin-top: 8px;
+            margin-top: 12px;
         }
 
         .empty-state {
             text-align: center;
-            padding: 48px 24px;
+            padding: 64px 32px;
             color: var(--text-muted);
         }
 
         .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            opacity: 0.5;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.3;
+            color: var(--primary);
         }
 
         .empty-state p {
-            margin-bottom: 16px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .stat-card {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 20px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .stat-card i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .stat-card .value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .stat-card .label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+            margin-bottom: 20px;
+            font-size: 1rem;
         }
 
         .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            background: var(--bg);
-            border-radius: 8px;
+            gap: 10px;
+            padding: 12px 18px;
+            background: var(--bg-warm);
+            border-radius: 50px;
             cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .checkbox-item:hover {
-            background: #e2e8f0;
+            border-color: var(--primary);
+            background: var(--bg);
         }
 
         .checkbox-item input {
             cursor: pointer;
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
         }
 
         @page {
@@ -636,7 +1024,7 @@
                 font-size: 6pt;
                 word-break: break-word;
                 text-align: center;
-                background: #2563eb !important;
+                background: #1a1a2e !important;
                 color: white !important;
             }
 
@@ -644,7 +1032,7 @@
                 width: 60px !important;
                 min-width: 60px !important;
                 max-width: 60px !important;
-                background: #1d4ed8 !important;
+                background: #2d2d44 !important;
             }
 
             .timeline-cell {
@@ -740,51 +1128,74 @@
 
         @media (max-width: 768px) {
             .container {
-                padding: 12px;
+                padding: 16px;
             }
             
-            header {
-                padding: 16px;
+            .header-content {
+                padding: 20px;
             }
 
             header h1 {
-                font-size: 1.3rem;
+                font-size: 1.75rem;
+            }
+
+            header::before {
+                width: 30%;
+                opacity: 0.5;
+            }
+            
+            .header-actions {
+                flex-wrap: wrap;
+            }
+
+            .header-actions .btn {
+                flex: 1;
+                justify-content: center;
+                min-width: 80px;
             }
             
             .card {
-                padding: 12px;
+                padding: 20px;
             }
 
             .card-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 12px;
+                gap: 16px;
             }
 
             .card-header h2 {
-                font-size: 1.1rem;
+                font-size: 1.4rem;
             }
             
             .tabs {
                 flex-direction: column;
+                gap: 2px;
             }
             
             .tab-btn {
                 width: 100%;
                 justify-content: center;
+                padding: 16px;
             }
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
+                gap: 12px;
             }
 
             .stat-card {
-                padding: 12px;
+                padding: 16px;
+                flex-direction: column;
+                text-align: center;
             }
 
             .stat-card .value {
-                font-size: 1.5rem;
+                font-size: 2rem;
+            }
+
+            .stat-card i {
+                font-size: 1.3rem;
             }
 
             /* Members table - card layout on mobile */
@@ -1016,24 +1427,54 @@
 
         .action-buttons {
             display: flex;
-            gap: 8px;
+            gap: 12px;
+            align-items: center;
         }
 
         .select-member {
             min-width: 200px;
         }
 
+        /* Past events collapsible */
+        .past-events-header {
+            background: var(--bg-warm);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .past-events-header:hover {
+            background: var(--bg);
+            border-color: var(--primary);
+        }
+
+        .past-events-header h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
         .filter-group {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             flex-wrap: wrap;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            align-items: center;
         }
 
         .role-tag {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             font-size: 0.8rem;
             background: #e0e7ff;
             color: #4338ca;
@@ -1042,25 +1483,26 @@
         /* View Toggle */
         .view-toggle {
             display: inline-flex;
-            background: var(--bg);
-            border-radius: 8px;
+            background: var(--bg-warm);
+            border-radius: 50px;
             padding: 4px;
-            margin-right: 8px;
+            margin-right: 12px;
+            border: 1px solid var(--border);
         }
 
         .view-btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
             background: transparent;
             color: var(--text-muted);
-            border-radius: 6px;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.2s;
+            font-weight: 600;
+            transition: all 0.25s ease;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .view-btn:hover {
@@ -1068,14 +1510,17 @@
         }
 
         .view-btn.active {
-            background: var(--primary);
+            background: var(--charcoal);
             color: white;
+            box-shadow: 0 2px 8px rgba(26,26,46,0.2);
         }
 
         /* Timeline View */
         .timeline-container {
             overflow-x: auto;
-            margin-top: 16px;
+            margin-top: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
         }
 
         .timeline-grid {
@@ -1083,7 +1528,7 @@
             min-width: 800px;
             gap: 1px;
             background: var(--border);
-            border-radius: var(--radius);
+            border-radius: var(--radius-lg);
             overflow: hidden;
         }
 
@@ -1092,21 +1537,23 @@
         }
 
         .timeline-header-cell {
-            background: var(--primary);
+            background: var(--charcoal);
             color: white;
-            padding: 12px 8px;
+            padding: 14px 10px;
             text-align: center;
-            font-weight: 600;
-            font-size: 0.85rem;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             position: sticky;
             top: 0;
             z-index: 10;
         }
 
         .timeline-header-cell.role-header {
-            background: var(--primary-dark);
+            background: var(--charcoal-light);
             text-align: left;
-            min-width: 120px;
+            min-width: 130px;
         }
 
         .timeline-row {
@@ -1115,201 +1562,250 @@
 
         .timeline-role-cell {
             background: var(--card);
-            padding: 12px;
-            font-weight: 600;
+            padding: 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            border-right: 2px solid var(--border);
+            gap: 10px;
+            border-right: 3px solid var(--bg-warm);
         }
 
         .timeline-cell {
             background: var(--card);
-            padding: 8px;
-            min-height: 70px;
+            padding: 10px;
+            min-height: 75px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .timeline-cell:hover {
+            background: var(--bg-warm);
         }
 
         .timeline-cell.unassigned {
-            background: #fef3c7;
+            background: #fffbeb;
         }
 
         .timeline-slot {
-            padding: 6px 8px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: var(--radius);
             font-size: 0.8rem;
-            font-weight: 500;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            transition: all 0.2s ease;
+        }
+
+        .timeline-slot:hover {
+            transform: scale(1.02);
         }
 
         .timeline-slot.assigned {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
+            background: var(--success-light);
+            color: var(--success);
+            border: 2px solid #86efac;
         }
 
         .timeline-slot.unassigned {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
+            background: var(--danger-light);
+            color: var(--danger);
+            border: 2px solid #fca5a5;
         }
 
         .timeline-slot i {
             flex-shrink: 0;
         }
 
-        /* Role colors for timeline */
-        .role-color-0 { border-left: 4px solid #3b82f6; }
-        .role-color-1 { border-left: 4px solid #22c55e; }
-        .role-color-2 { border-left: 4px solid #f59e0b; }
-        .role-color-3 { border-left: 4px solid #ef4444; }
-        .role-color-4 { border-left: 4px solid #8b5cf6; }
-        .role-color-5 { border-left: 4px solid #ec4899; }
-        .role-color-6 { border-left: 4px solid #06b6d4; }
+        /* Role colors for timeline - warm palette */
+        .role-color-0 { border-left: 4px solid #e85d04; }
+        .role-color-1 { border-left: 4px solid #059669; }
+        .role-color-2 { border-left: 4px solid #7c3aed; }
+        .role-color-3 { border-left: 4px solid #db2777; }
+        .role-color-4 { border-left: 4px solid #0891b2; }
+        .role-color-5 { border-left: 4px solid #ca8a04; }
+        .role-color-6 { border-left: 4px solid #dc2626; }
 
         .role-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
             flex-shrink: 0;
         }
 
-        .role-dot-0 { background: #3b82f6; }
-        .role-dot-1 { background: #22c55e; }
-        .role-dot-2 { background: #f59e0b; }
-        .role-dot-3 { background: #ef4444; }
-        .role-dot-4 { background: #8b5cf6; }
-        .role-dot-5 { background: #ec4899; }
-        .role-dot-6 { background: #06b6d4; }
+        .role-dot-0 { background: #e85d04; }
+        .role-dot-1 { background: #059669; }
+        .role-dot-2 { background: #7c3aed; }
+        .role-dot-3 { background: #db2777; }
+        .role-dot-4 { background: #0891b2; }
+        .role-dot-5 { background: #ca8a04; }
+        .role-dot-6 { background: #dc2626; }
 
         /* Summary cards */
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .summary-card {
-            background: var(--bg);
-            border-radius: var(--radius);
-            padding: 16px;
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            padding: 20px;
             border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .summary-card h4 {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            font-weight: 700;
         }
 
         .summary-card .value {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: var(--charcoal);
         }
 
         /* Legend */
         .timeline-legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 16px;
-            padding: 12px;
-            background: var(--bg);
-            border-radius: 8px;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 16px 20px;
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-size: 0.85rem;
+            font-weight: 500;
         }
 
         /* Member timeline view */
         .member-timeline {
-            margin-top: 24px;
+            margin-top: 28px;
+        }
+
+        .member-timeline h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            color: var(--charcoal);
         }
 
         .member-row {
             display: flex;
             align-items: stretch;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             background: var(--card);
-            border-radius: 8px;
+            border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .member-row:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-lg);
         }
 
         .member-name {
-            min-width: 150px;
-            padding: 12px 16px;
-            background: var(--bg);
-            font-weight: 600;
+            min-width: 160px;
+            padding: 14px 18px;
+            background: var(--bg-warm);
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
-            border-right: 2px solid var(--border);
+            gap: 10px;
+            border-right: 3px solid var(--primary);
+            color: var(--charcoal);
         }
 
         .member-shifts {
             flex: 1;
             display: flex;
             align-items: center;
-            padding: 8px;
-            gap: 4px;
+            padding: 10px;
+            gap: 8px;
             overflow-x: auto;
         }
 
         .member-shift-block {
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 10px 14px;
+            border-radius: var(--radius);
             font-size: 0.8rem;
-            font-weight: 500;
+            font-weight: 600;
             white-space: nowrap;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .member-shift-block:hover {
+            transform: scale(1.05);
         }
 
         .member-shift-block .time {
-            font-weight: 700;
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
 
         .member-shift-block .role {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
-                <div>
-                    <h1><i class="ri-calendar-schedule-line"></i> Funktionärsplanering</h1>
-                    <p>Bemanning för matcher, cuper och arrangemang</p>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-sm" style="background: rgba(255,255,255,0.2); color: white;" onclick="openExportModal()">
+            <div class="header-content">
+                <h1><i class="ri-calendar-schedule-line"></i> Funktionärsplanering</h1>
+                <p>Bemanning för matcher, cuper och arrangemang</p>
+                <div class="header-actions">
+                    <button class="btn btn-sm" onclick="openExportModal()">
                         <i class="ri-download-2-line"></i> Exportera
                     </button>
-                    <button class="btn btn-sm" style="background: rgba(255,255,255,0.2); color: white;" onclick="openImportModal()">
+                    <button class="btn btn-sm" onclick="openImportModal()">
                         <i class="ri-upload-2-line"></i> Importera
                     </button>
-                    <button class="btn btn-sm" style="background: rgba(255,100,100,0.3); color: white;" onclick="confirmDeleteAllData()" title="Radera all data">
+                    <button class="btn btn-sm" onclick="confirmDeleteAllData()" title="Radera all data" style="border-color: rgba(255,100,100,0.5);">
                         <i class="ri-delete-bin-line"></i>
                     </button>
-                    <button class="btn btn-sm" style="background: rgba(255,255,255,0.2); color: white;" onclick="showTutorial()" title="Hjälp & info">
+                    <button class="btn btn-sm" onclick="showTutorial()" title="Hjälp & info">
                         <i class="ri-question-line"></i>
                     </button>
                 </div>
@@ -1707,99 +2203,100 @@
     <div class="modal-overlay" id="tutorialModal">
         <div class="modal" style="max-width: 550px;">
             <div class="modal-header">
-                <h3><i class="ri-lightbulb-line"></i> Välkommen!</h3>
+                <h3><i class="ri-lightbulb-line" style="color: var(--primary);"></i> Välkommen!</h3>
                 <button class="close-btn" onclick="closeTutorial()">
                     <i class="ri-close-line"></i>
                 </button>
             </div>
             <div style="line-height: 1.7;">
-                <div style="text-align: center; padding: 20px 0;">
-                    <i class="ri-calendar-schedule-line" style="font-size: 3rem; color: var(--primary);"></i>
-                    <h2 style="margin-top: 12px;">Funktionärsplanering</h2>
-                    <p style="color: var(--text-muted);">Enkel schemaläggning för matcher och arrangemang</p>
+                <div style="text-align: center; padding: 24px 0; background: linear-gradient(135deg, var(--charcoal) 0%, var(--charcoal-light) 100%); border-radius: var(--radius-lg); margin-bottom: 20px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; right: 0; width: 40%; height: 100%; background: repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(232, 93, 4, 0.1) 8px, rgba(232, 93, 4, 0.1) 16px);"></div>
+                    <i class="ri-calendar-schedule-line" style="font-size: 3rem; color: var(--primary); position: relative; z-index: 1;"></i>
+                    <h2 style="margin-top: 12px; color: white; font-family: var(--font-display); letter-spacing: 2px; font-size: 1.75rem; position: relative; z-index: 1;">FUNKTIONÄRSPLANERING</h2>
+                    <p style="color: rgba(255,255,255,0.7); position: relative; z-index: 1;">Enkel schemaläggning för matcher och arrangemang</p>
                 </div>
 
-                <div style="background: #dbeafe; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                    <h4 style="margin-bottom: 8px;"><i class="ri-smartphone-line"></i> Sparas i din webbläsare</h4>
-                    <p style="font-size: 0.9rem; margin: 0;">
-                        All data sparas <strong>lokalt i din webbläsare</strong> – inte på någon server. 
+                <div style="background: var(--bg-warm); padding: 18px; border-radius: var(--radius-lg); margin-bottom: 16px; border-left: 4px solid var(--primary);">
+                    <h4 style="margin-bottom: 8px; font-weight: 700;"><i class="ri-smartphone-line" style="color: var(--primary);"></i> Sparas i din webbläsare</h4>
+                    <p style="font-size: 0.9rem; margin: 0; color: var(--text-muted);">
+                        All data sparas <strong style="color: var(--text);">lokalt i din webbläsare</strong> – inte på någon server. 
                         Det betyder att dina uppgifter är privata och stannar på din enhet.
                     </p>
                 </div>
 
-                <div style="background: #fef3c7; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                    <h4 style="margin-bottom: 8px;"><i class="ri-error-warning-line"></i> Viktigt att veta</h4>
-                    <ul style="font-size: 0.9rem; margin: 0; padding-left: 20px;">
+                <div style="background: #fffbeb; padding: 18px; border-radius: var(--radius-lg); margin-bottom: 16px; border-left: 4px solid #d97706;">
+                    <h4 style="margin-bottom: 8px; font-weight: 700; color: #92400e;"><i class="ri-error-warning-line"></i> Viktigt att veta</h4>
+                    <ul style="font-size: 0.9rem; margin: 0; padding-left: 20px; color: #78350f;">
                         <li>Om du rensar webbläsardata försvinner allt</li>
                         <li>Data delas inte automatiskt mellan enheter</li>
                         <li>Använd <strong>Exportera</strong> för att spara en backup</li>
                     </ul>
                 </div>
 
-                <div style="background: #dcfce7; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                    <h4 style="margin-bottom: 8px;"><i class="ri-share-line"></i> Dela med andra</h4>
-                    <p style="font-size: 0.9rem; margin: 0;">
+                <div style="background: var(--success-light); padding: 18px; border-radius: var(--radius-lg); margin-bottom: 16px; border-left: 4px solid var(--success);">
+                    <h4 style="margin-bottom: 8px; font-weight: 700; color: #065f46;"><i class="ri-share-line"></i> Dela med andra</h4>
+                    <p style="font-size: 0.9rem; margin: 0; color: #047857;">
                         Vill du dela upplägget med någon annan? Använd <strong>Exportera</strong> för att kopiera 
                         datan och skicka via SMS, mail eller WhatsApp. De kan sedan <strong>Importera</strong> på sin enhet.
                     </p>
                 </div>
 
-                <div style="background: #f3e8ff; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                    <h4 style="margin-bottom: 8px;"><i class="ri-smartphone-line"></i> Spara som app på mobilen</h4>
-                    <p style="font-size: 0.9rem; margin-bottom: 12px;">
+                <div style="background: #faf5ff; padding: 18px; border-radius: var(--radius-lg); margin-bottom: 20px; border-left: 4px solid #7c3aed;">
+                    <h4 style="margin-bottom: 8px; font-weight: 700; color: #5b21b6;"><i class="ri-smartphone-line"></i> Spara som app på mobilen</h4>
+                    <p style="font-size: 0.9rem; margin-bottom: 12px; color: #6d28d9;">
                         Du kan lägga till denna sida på din hemskärm så fungerar den som en app!
                     </p>
                     
-                    <div id="ios-instructions" style="display: none; background: white; padding: 12px; border-radius: 8px;">
-                        <strong style="font-size: 0.85rem;"><i class="ri-apple-fill"></i> iPhone / iPad (Safari):</strong>
-                        <ol style="font-size: 0.85rem; margin: 8px 0 0 0; padding-left: 20px;">
-                            <li>Tryck på <strong>Dela</strong>-ikonen <span style="border: 1px solid #ccc; padding: 2px 6px; border-radius: 4px;">□↑</span> (ruta med pil upp, längst ner i Safari)</li>
-                            <li>Scrolla ner i menyn och tryck <strong>"Lägg till på hemskärmen"</strong></li>
-                            <li>Skriv ett namn (eller behåll) och tryck <strong>Lägg till</strong></li>
+                    <div id="ios-instructions" style="display: none; background: white; padding: 14px; border-radius: var(--radius); border: 1px solid #e9d5ff;">
+                        <strong style="font-size: 0.85rem; color: var(--charcoal);"><i class="ri-apple-fill"></i> iPhone / iPad (Safari):</strong>
+                        <ol style="font-size: 0.85rem; margin: 10px 0 0 0; padding-left: 20px; color: var(--text-muted);">
+                            <li>Tryck på <strong style="color: var(--text);">Dela</strong>-ikonen <span style="border: 1px solid #ddd; padding: 2px 8px; border-radius: 4px; background: #f9fafb;">□↑</span></li>
+                            <li>Scrolla ner och tryck <strong style="color: var(--text);">"Lägg till på hemskärmen"</strong></li>
+                            <li>Tryck <strong style="color: var(--text);">Lägg till</strong></li>
                         </ol>
-                        <p style="font-size: 0.8rem; color: #666; margin-top: 8px; margin-bottom: 0;">
-                            💡 På iOS 18+: Låt "Öppna som webbapp" vara <strong>på</strong> för bästa upplevelse
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0; padding: 8px; background: #fef3c7; border-radius: 4px;">
+                            💡 iOS 18+: Låt "Öppna som webbapp" vara <strong>på</strong>
                         </p>
                     </div>
                     
-                    <div id="android-instructions" style="display: none; background: white; padding: 12px; border-radius: 8px;">
-                        <strong style="font-size: 0.85rem;"><i class="ri-android-fill"></i> Android (Chrome):</strong>
-                        <ol style="font-size: 0.85rem; margin: 8px 0 0 0; padding-left: 20px;">
-                            <li>Tryck på <strong>menyn</strong> <span style="border: 1px solid #ccc; padding: 2px 6px; border-radius: 4px;">⋮</span> (tre prickar, oftast uppe till höger)</li>
-                            <li>Välj <strong>"Installera app"</strong> eller <strong>"Lägg till på startskärmen"</strong></li>
-                            <li>Bekräfta med <strong>Installera</strong> eller <strong>Lägg till</strong></li>
+                    <div id="android-instructions" style="display: none; background: white; padding: 14px; border-radius: var(--radius); border: 1px solid #e9d5ff;">
+                        <strong style="font-size: 0.85rem; color: var(--charcoal);"><i class="ri-android-fill"></i> Android (Chrome):</strong>
+                        <ol style="font-size: 0.85rem; margin: 10px 0 0 0; padding-left: 20px; color: var(--text-muted);">
+                            <li>Tryck på <strong style="color: var(--text);">menyn</strong> <span style="border: 1px solid #ddd; padding: 2px 8px; border-radius: 4px; background: #f9fafb;">⋮</span></li>
+                            <li>Välj <strong style="color: var(--text);">"Installera app"</strong> eller <strong style="color: var(--text);">"Lägg till på startskärmen"</strong></li>
+                            <li>Bekräfta med <strong style="color: var(--text);">Installera</strong></li>
                         </ol>
                     </div>
 
-                    <div id="desktop-instructions" style="display: none; background: white; padding: 12px; border-radius: 8px;">
-                        <strong style="font-size: 0.85rem;"><i class="ri-computer-line"></i> Dator:</strong>
-                        <p style="font-size: 0.85rem; margin: 8px 0 0 0;">
+                    <div id="desktop-instructions" style="display: none; background: white; padding: 14px; border-radius: var(--radius); border: 1px solid #e9d5ff;">
+                        <strong style="font-size: 0.85rem; color: var(--charcoal);"><i class="ri-computer-line"></i> Dator:</strong>
+                        <p style="font-size: 0.85rem; margin: 8px 0 0 0; color: var(--text-muted);">
                             På en dator kan du bokmärka sidan eller besöka den direkt. 
                             Vill du använda den på mobilen? Öppna länken på din telefon!
                         </p>
                     </div>
                 </div>
 
-                <h4 style="margin-bottom: 12px;"><i class="ri-play-circle-line"></i> Kom igång</h4>
-                <ol style="font-size: 0.9rem; padding-left: 20px; margin-bottom: 20px;">
-                    <li style="margin-bottom: 8px;"><strong>Lägg till medlemmar</strong> – de som ska bemanna</li>
-                    <li style="margin-bottom: 8px;"><strong>Skapa evenemang</strong> – match, cup eller arrangemang</li>
-                    <li style="margin-bottom: 8px;"><strong>Generera pass</strong> – t.ex. kiosk 09-15, 1 timme per pass</li>
-                    <li style="margin-bottom: 8px;"><strong>Bemanna</strong> – fördela automatiskt eller manuellt</li>
-                    <li style="margin-bottom: 8px;"><strong>Skicka meddelanden</strong> – via SMS, WhatsApp eller mail</li>
+                <h4 style="margin-bottom: 14px; font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;"><i class="ri-play-circle-line" style="color: var(--primary);"></i> Kom igång</h4>
+                <ol style="font-size: 0.9rem; padding-left: 20px; margin-bottom: 24px; color: var(--text-muted);">
+                    <li style="margin-bottom: 10px;"><strong style="color: var(--text);">Lägg till medlemmar</strong> – de som ska bemanna</li>
+                    <li style="margin-bottom: 10px;"><strong style="color: var(--text);">Skapa evenemang</strong> – match, cup eller arrangemang</li>
+                    <li style="margin-bottom: 10px;"><strong style="color: var(--text);">Generera pass</strong> – t.ex. kiosk 09-15, 1 timme per pass</li>
+                    <li style="margin-bottom: 10px;"><strong style="color: var(--text);">Bemanna</strong> – fördela automatiskt eller manuellt</li>
+                    <li style="margin-bottom: 10px;"><strong style="color: var(--text);">Skicka meddelanden</strong> – via SMS, WhatsApp eller mail</li>
                 </ol>
 
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="closeTutorial()" style="flex: 1;">
                         <i class="ri-check-line"></i> Sätt igång!
                     </button>
                     <button class="btn btn-secondary" onclick="closeTutorial(); openTutorialAgain();">
-                        <i class="ri-question-line"></i> Visa inte igen
+                        <i class="ri-eye-off-line"></i> Visa inte igen
                     </button>
                 </div>
 
-                <p style="text-align: center; margin-top: 16px; font-size: 0.8rem; color: var(--text-muted);">
-                    <i class="ri-information-line"></i> Du kan visa denna guide igen via <strong>?</strong>-knappen
+                <p style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--text-muted);">
+                    <i class="ri-information-line"></i> Visa denna guide igen via <strong style="color: var(--primary);">?</strong>-knappen
                 </p>
             </div>
         </div>
@@ -1864,58 +2361,50 @@
 
     <!-- Import Modal -->
     <div class="modal-overlay" id="importModal">
-        <div class="modal" style="max-width: 600px;">
+        <div class="modal" style="max-width: 500px;">
             <div class="modal-header">
-                <h3><i class="ri-upload-2-line"></i> Importera data</h3>
+                <h3><i class="ri-upload-2-line"></i> Importera</h3>
                 <button class="close-btn" onclick="closeImportModal()">
                     <i class="ri-close-line"></i>
                 </button>
             </div>
             <div>
-                <p style="margin-bottom: 16px; color: var(--text-muted);">
-                    Importera data från en annan enhet eller person. Klistra in JSON-data eller välj en fil.
-                </p>
-
-                <div class="form-group">
-                    <label>Klistra in data (JSON)</label>
-                    <textarea class="form-control" id="importData" rows="8" placeholder="Klistra in exporterad JSON-data här..." style="font-family: monospace; font-size: 0.8rem;"></textarea>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label style="margin-bottom: 4px;">Klistra in JSON eller välj fil</label>
+                    <textarea class="form-control" id="importData" rows="5" placeholder="Klistra in exporterad JSON-data här..." style="font-family: monospace; font-size: 0.75rem;"></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label>Eller välj fil</label>
-                    <input type="file" class="form-control" id="importFile" accept=".json" onchange="loadImportFile(event)">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <input type="file" class="form-control" id="importFile" accept=".json" onchange="loadImportFile(event)" style="padding: 10px;">
                 </div>
 
-                <div class="form-group">
-                    <label>Importläge</label>
-                    <div class="checkbox-group" style="flex-direction: column;">
-                        <label class="checkbox-item">
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <div style="display: flex; gap: 8px;">
+                        <label class="checkbox-item" style="flex: 1; padding: 10px 14px; margin: 0;">
                             <input type="radio" name="importMode" value="merge" checked>
                             <div>
-                                <strong>Slå ihop</strong>
-                                <div style="font-size: 0.8rem; color: var(--text-muted);">Lägg till nya, behåll befintliga</div>
+                                <strong style="font-size: 0.85rem;">Slå ihop</strong>
                             </div>
                         </label>
-                        <label class="checkbox-item">
+                        <label class="checkbox-item" style="flex: 1; padding: 10px 14px; margin: 0;">
                             <input type="radio" name="importMode" value="replace">
                             <div>
-                                <strong>Ersätt allt</strong>
-                                <div style="font-size: 0.8rem; color: var(--text-muted);">Radera befintlig data och importera ny</div>
+                                <strong style="font-size: 0.85rem;">Ersätt allt</strong>
                             </div>
                         </label>
                     </div>
                 </div>
 
-                <div id="importPreview" style="display: none; margin-bottom: 16px; padding: 12px; background: var(--bg); border-radius: 8px;">
+                <div id="importPreview" style="display: none; margin-bottom: 12px; padding: 10px; background: var(--bg-warm); border-radius: var(--radius); font-size: 0.85rem;">
                     <strong>Förhandsvisning:</strong>
                     <div id="importPreviewContent"></div>
                 </div>
 
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <button class="btn btn-secondary" onclick="previewImport()">
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary" onclick="previewImport()" style="flex: 1;">
                         <i class="ri-eye-line"></i> Förhandsgranska
                     </button>
-                    <button class="btn btn-primary" onclick="executeImport()">
+                    <button class="btn btn-primary" onclick="executeImport()" style="flex: 1;">
                         <i class="ri-upload-line"></i> Importera
                     </button>
                 </div>
@@ -3695,11 +4184,46 @@ Tips: Exportera först om du vill ha en backup!`;
         // ==================== MESSAGES VIEW ====================
         function populateMessageFilters() {
             const eventFilter = document.getElementById('messageEventFilter');
-            eventFilter.innerHTML = '<option value="">Välj evenemang</option>' +
-                appData.events
-                    .sort((a, b) => new Date(a.date) - new Date(b.date))
-                    .map(e => `<option value="${e.id}">${e.name} (${formatDate(e.date)})</option>`)
-                    .join('');
+            const filterGroup = eventFilter.closest('.filter-group');
+            
+            // Only show upcoming events (today or later)
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const upcomingEvents = appData.events
+                .filter(e => new Date(e.date) >= today)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            if (upcomingEvents.length === 0) {
+                // No upcoming events
+                eventFilter.innerHTML = '<option value="">Inga kommande evenemang</option>';
+                eventFilter.style.display = 'block';
+            } else if (upcomingEvents.length === 1) {
+                // Only one event - auto-select and hide dropdown
+                eventFilter.innerHTML = `<option value="${upcomingEvents[0].id}">${upcomingEvents[0].name} (${formatDate(upcomingEvents[0].date)})</option>`;
+                eventFilter.value = upcomingEvents[0].id;
+                eventFilter.style.display = 'none';
+                // Show event name as text instead
+                let eventLabel = filterGroup.querySelector('.auto-selected-event');
+                if (!eventLabel) {
+                    eventLabel = document.createElement('span');
+                    eventLabel.className = 'auto-selected-event';
+                    eventLabel.style.cssText = 'font-weight: 600; font-size: 1rem; color: var(--charcoal);';
+                    filterGroup.insertBefore(eventLabel, eventFilter);
+                }
+                eventLabel.innerHTML = `<i class="ri-calendar-event-line" style="color: var(--primary);"></i> ${upcomingEvents[0].name}`;
+                renderMessages();
+            } else {
+                // Multiple events - show dropdown
+                eventFilter.style.display = 'block';
+                eventFilter.innerHTML = '<option value="">Välj evenemang</option>' +
+                    upcomingEvents
+                        .map(e => `<option value="${e.id}">${e.name} (${formatDate(e.date)})</option>`)
+                        .join('');
+                // Remove auto-selected label if exists
+                const eventLabel = filterGroup.querySelector('.auto-selected-event');
+                if (eventLabel) eventLabel.remove();
+            }
         }
 
         function toggleMessageTemplate() {
@@ -3812,13 +4336,13 @@ Tips: Exportera först om du vill ha en backup!`;
                     
                     html += `
                         <div class="message-preview" style="margin-bottom: 16px;">
-                            <h4 style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <h4 style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                                 <i class="ri-user-line"></i> ${item.member.name}
-                                <span class="badge badge-primary">${item.shifts.length} pass</span>
-                                ${item.member.phone ? `<span style="color: var(--text-muted); font-weight: normal; font-size: 0.85rem;"><i class="ri-phone-line"></i> ${item.member.phone}</span>` : ''}
-                                ${item.member.email ? `<span style="color: var(--text-muted); font-weight: normal; font-size: 0.85rem;"><i class="ri-mail-line"></i> ${item.member.email}</span>` : ''}
+                                <span class="badge" style="background: rgba(232,93,4,0.2); color: var(--primary-light);">${item.shifts.length} pass</span>
+                                ${item.member.phone ? `<span style="color: rgba(255,255,255,0.6); font-weight: normal; font-size: 0.8rem;"><i class="ri-phone-line"></i> ${item.member.phone}</span>` : ''}
+                                ${item.member.email ? `<span style="color: rgba(255,255,255,0.6); font-weight: normal; font-size: 0.8rem;"><i class="ri-mail-line"></i> ${item.member.email}</span>` : ''}
                             </h4>
-                            <div style="background: white; padding: 12px; border-radius: 8px; margin-top: 8px; white-space: pre-wrap; font-size: 0.9rem; line-height: 1.5;">${escapeHtml(messageText)}</div>
+                            <div style="background: var(--cream); color: var(--text); padding: 16px; border-radius: var(--radius); margin-top: 12px; white-space: pre-wrap; font-size: 0.9rem; line-height: 1.6; border: 1px solid var(--border);">${escapeHtml(messageText)}</div>
                             <div style="margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap;">
                                 <button class="btn btn-sm btn-secondary copy-btn" onclick="copyToClipboard(this, \`${escapeForJs(messageText)}\`)">
                                     <i class="ri-file-copy-line"></i> Kopiera
